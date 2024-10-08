@@ -1,5 +1,5 @@
 -module(sudoku_solver).
--export([start/0, solve/1, print_grid/1]).
+-export([start/0, solve/1, sudoku_grid/0, validate_grid/1, validate_initial_grid/1]).
 
 % Sample Sudoku puzzle with 0s as placeholders for empty cells.
 sudoku_grid() ->
