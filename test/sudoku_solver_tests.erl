@@ -58,7 +58,7 @@ validate_grid_size_test() ->
 validate_grid_decimal_test() ->
     ?assert(
         begin
-            % Define a test grid with an invalid size
+            % Define a test grid with an invalid number
             TestGrid = [
                     [0, 8, 3, 0, 7, 0, 0, 0, 0],
                     [9, 0, 0, 0, 4, 0, 0, 0, 0],
@@ -78,7 +78,7 @@ validate_grid_decimal_test() ->
 validate_grid_negative_test() ->
     ?assert(
         begin
-            % Define a test grid with an invalid size
+            % Define a test grid with an invalid number
             TestGrid = [
                     [0, 8, 3, 0, 7, 0, 0, 0, 0],
                     [9, 0, 0, 0, 4, 0, 0, 0, 0],
@@ -88,6 +88,26 @@ validate_grid_negative_test() ->
                     [8, 0, 6, 7, 0, 5, 3, 9, 2],
                     [0, 1, 8, 0, 9, 7, 0, 0, 3],
                     [5, 3, 0, 6, 0, 4, 0, -8, 0],
+                    [4, 2, 0, 3, 8, 0, 0, 0, 5]
+            ],
+            {error, Reason} = sudoku_solver:validate_grid(TestGrid),
+            Reason == "Grid contains invalid numbers. Only integers between 0 and 9 are allowed."
+        end
+    ).
+
+validate_grid_letter_test() ->
+    ?assert(
+        begin
+            % Define a test grid with an invalid number
+            TestGrid = [
+                    [0, 8, 3, 0, 7, 0, 0, 0, 0],
+                    [9, 0, 0, 0, 4, 0, 0, 0, 0],
+                    [2, 0, 4, 0, 0, 0, 7, 0, 8],
+                    [3, 0, 0, 4, 6, 0, 5, 1, 0],
+                    [0, 0, 0, 0, 3, 2, 0, 4, 0],
+                    [8, 0, 6, 7, 0, 5, 3, 9, 2],
+                    [0, 1, 8, 0, 9, 7, 0, 0, 3],
+                    [5, 3, 0, 6, 0, 4, 0, h, 0],
                     [4, 2, 0, 3, 8, 0, 0, 0, 5]
             ],
             {error, Reason} = sudoku_solver:validate_grid(TestGrid),
