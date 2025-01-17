@@ -68,7 +68,15 @@ validate_grid(Grid) ->
             case lists:all(fun(Row) ->
                 lists:all(fun(X) -> is_integer(X) andalso X >= 0 andalso X =< 9 end, Row)
             end, Grid) of
-                true -> {ok, Grid};
+                true -> 
+                    Flattened = lists:flatten(Grid),
+                    NonZeros = lists:filter(fun(X) -> X =/= 0 end, Flattened),
+                    Count = length(NonZeros),
+
+                    case Count >= 17 of 
+                        true -> {ok, Grid};
+                        false -> {error, "There must be at least 17 numbers in the grid."}
+                    end;
                 false -> {error, "Grid contains invalid numbers. Only integers between 0 and 9 are allowed."}
             end;
         false -> {error, "Invalid grid size. Grid must be 9x9."}

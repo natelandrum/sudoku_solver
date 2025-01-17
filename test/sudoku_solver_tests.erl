@@ -54,6 +54,27 @@ validate_grid_size_test() ->
         end
     ).
 
+validate_grid_minimum_test() ->
+    ?assert(
+        begin
+            % Define a test grid with too few numbers
+            TestGrid = [
+                    [0, 0, 3, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 4, 0, 0, 0, 0],
+                    [2, 0, 0, 0, 0, 0, 0, 0, 8],
+                    [0, 0, 0, 0, 0, 0, 0, 1, 0],
+                    [0, 0, 0, 0, 0, 2, 0, 0, 0],
+                    [8, 0, 0, 7, 0, 0, 0, 0, 2],
+                    [0, 0, 0, 0, 9, 7, 0, 0, 3],
+                    [0, 3, 0, 0, 0, 0, 0, 0, 0],
+                    [4, 0, 0, 3, 0, 0, 0, 0, 0]
+                ],
+            {error, Reason} = sudoku_solver:validate_grid(TestGrid),
+            io:format(Reason),
+            Reason == "There must be at least 17 numbers in the grid."
+        end
+        ).
+
 
 validate_grid_decimal_test() ->
     ?assert(
