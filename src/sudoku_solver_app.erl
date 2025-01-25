@@ -11,7 +11,9 @@
 
 start(_StartType, _StartArgs) ->
     Dispatch = cowboy_router:compile([
-    {'_', [{"/", sudoku_solver_handler, []}]}
+    {'_', [
+        {"/solve", sudoku_solver_handler, []}
+    ]}
 ]),
 {ok, _} = cowboy:start_clear(http_listener,
     [{port, 8080}],

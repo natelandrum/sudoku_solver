@@ -10,14 +10,11 @@ init(Req, State) ->
     % Read and parse the JSON body
     case cowboy_req:read_body(Req) of
         {ok, Body, Req1} ->
-            io:format("Raw Body: ~s~n", [Body]),
             try
                 ParsedBody = jsx:decode(Body, [return_maps]),
-                io:format("Decoded JSON: ~p~n", [ParsedBody]),
                 case maps:get(<<"grid">>, ParsedBody, undefined) of
                     SudokuBoard when is_list(SudokuBoard) ->
                         % Solve the board
-                        io:format("Board: ~p~n", [SudokuBoard]),
                         case sudoku_solver:solve(SudokuBoard) of
                             {ok, SolvedBoard} ->
                                 Response = jsx:encode(#{status => <<"success">>, solved_board => SolvedBoard}),
@@ -32,7 +29,7 @@ init(Req, State) ->
                         ErrorResponse = jsx:encode(#{status => <<"error">>, message => <<"Invalid Sudoku board structure or missing 'grid' property.">>}),
                         {ok, Req2} = cowboy_req:reply(400, ?CONTENT_TYPE_JSON, ErrorResponse, Req1),
                         {ok, Req2, State}
-                end
+                end                
             catch
                 _: Error ->
                     Error

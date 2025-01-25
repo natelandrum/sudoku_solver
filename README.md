@@ -6,7 +6,7 @@ The software solves a given Sudoku puzzle by filling in the blanks (represented 
 
 The primary purpose was to deepend my understanding of Erlang's strengths such as recursion, pattern matching, and list handling. These features make Erlang a powerful tool for this type of problem.
 
-[Software Demo Video](https://youtu.be/SZsfai3xQdk )
+[Software Demo Video](https://youtu.be/SZsfai3xQdk)
 
 # Development Environment
 
@@ -23,5 +23,3 @@ The primary purpose was to deepend my understanding of Erlang's strengths such a
 # Future Work
 
 * Python OCR Integration: Implement a Python-based Optical Character Recognition (OCR) to automatically generate the Sudoku grid by scanning an image. This will convert an image of a Sudoku puzzle into the necessary 2D list format for the solver.
-* Handling Unsolvable Grids: Enhance the solver to detect unsolvable grids that have fewer than 17 clues (numbers). Puzzles with fewer than 17 clues are mathematically unsolvable, and the software should recognize this and terminate early.
-* Performance Optimization: Further optimize the recursive backtracking algorithm to handle more complex Sudoku grids efficiently, possibly by introducing parallel processing for larger or more complex puzzles.
