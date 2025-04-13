@@ -1,12 +1,12 @@
-import { FC, useState, useEffect } from "react";
+import { FunctionComponent, useState, useEffect } from "react";
 import clsx from "clsx";
 
-interface SolverFormProps {
+type SolverFormProps = {
   onSolve: (result: any) => void;
   solvedGrid: number[][] | null;
-}
+};
 
-const SolverForm: FC<SolverFormProps> = ({ onSolve, solvedGrid }) => {
+const SolverForm: FunctionComponent<SolverFormProps> = ({ onSolve, solvedGrid }) => {
   const [grid, setGrid] = useState<string[][]>(
     Array(9).fill(Array(9).fill(""))
   );
@@ -56,6 +56,7 @@ const SolverForm: FC<SolverFormProps> = ({ onSolve, solvedGrid }) => {
                   id={`cell-${i}-${j}`}
                   type="text"
                   value={cell}
+                  autoComplete="off"
                   onChange={(e) => handleChange(i, j, e.target.value)}
                   className={clsx(
                     "w-10 h-10 text-center border border-black text-black text-2xl",
@@ -72,13 +73,13 @@ const SolverForm: FC<SolverFormProps> = ({ onSolve, solvedGrid }) => {
         <div className="flex justify-between">
             <button
             type="submit"
-            className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
+            className="px-4 py-2 text-black font-semibold bg-blue-500 rounded hover:bg-blue-600"
             >
             Solve Sudoku
             </button>
             <button
             type="button"
-            className="px-4 py-2 text-white bg-orange-500 rounded hover:bg-orange-600"
+            className="px-4 py-2 text-black font-semibold bg-orange-500 rounded hover:bg-orange-600"
             onClick={() => { setGrid(Array(9).fill(Array(9).fill(""))); onSolve([]); }}
             >
             Clear Board
