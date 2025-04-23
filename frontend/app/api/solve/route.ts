@@ -4,7 +4,7 @@ export async function POST(req: Request) {
   const { grid } = await req.json();
 
   try {
-    const response = await fetch("https://sudokusolver-production.up.railway.app:4000/solve", {
+    const response = await fetch("https://sudokusolver-production.up.railway.app/solve", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ grid }),
