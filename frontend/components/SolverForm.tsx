@@ -1,9 +1,10 @@
 import { FunctionComponent, useState, useEffect } from "react";
 import clsx from "clsx";
+import { Result } from "@/lib/definitions";
 
 type SolverFormProps = {
-  onSolve: (result: any) => void;
-  solvedGrid: number[][] | null;
+  onSolve: (result: Result) => void;
+  solvedGrid: Partial<Result> | null;
 };
 
 const SolverForm: FunctionComponent<SolverFormProps> = ({ onSolve, solvedGrid }) => {
@@ -12,8 +13,8 @@ const SolverForm: FunctionComponent<SolverFormProps> = ({ onSolve, solvedGrid })
   );
 
   useEffect(() => {
-    if (solvedGrid) {
-      const newGrid = solvedGrid.map((row) =>
+    if (solvedGrid?.solved_board) {
+      const newGrid = solvedGrid.solved_board.map((row) =>
         row.map((cell) => (cell === 0 ? "" : cell.toString()))
       );
       setGrid(newGrid);
@@ -32,7 +33,6 @@ const SolverForm: FunctionComponent<SolverFormProps> = ({ onSolve, solvedGrid })
     const newGrid = grid.map((row) =>
       row.map((cell) => (cell === "" ? 0 : Number(cell)))
     );
-    console.log(newGrid);
     const response = await fetch("/api/solve", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -80,7 +80,7 @@ const SolverForm: FunctionComponent<SolverFormProps> = ({ onSolve, solvedGrid })
             <button
             type="button"
             className="px-4 py-2 text-black font-semibold bg-orange-500 rounded hover:bg-orange-600"
-            onClick={() => { setGrid(Array(9).fill(Array(9).fill(""))); onSolve([]); }}
+            onClick={() => { setGrid(Array(9).fill(Array(9).fill(""))); onSolve({ solved_board: [], status: "cleared", message: [] }); }}
             >
             Clear Board
             </button>

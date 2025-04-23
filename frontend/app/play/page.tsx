@@ -2,8 +2,6 @@
 
 import { useState, useEffect } from "react";
 import clsx from "clsx";
-import Link from "next/link";
-import Head from "next/head";
 
 export default function Game() {
   const [puzzle, setPuzzle] = useState<string[][]>(
@@ -21,11 +19,14 @@ export default function Game() {
   const [difficulty, setDifficulty] = useState("easy");
 
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const [location, setLocation] = useState(0);
 
-  const slider = document.getElementById("slider");
-  if (slider) {
-    slider.style.transform = `translateX(${selectedIndex * 104}%) translateY(-2.5rem)`;
-  }
+  useEffect(() => {
+    const slider = document.getElementById("slider");
+    if (slider) {
+      slider.style.transform = `translateX(${location}px) translateY(-2.5rem)`;
+    }
+  }, [location]);
 
   const handleGenerate = async () => {
     setUserError(0);
@@ -74,6 +75,15 @@ export default function Game() {
       }
     }
   };
+    const handleLocation = (element: HTMLButtonElement) => {
+      const elementLeft = element.getBoundingClientRect().left;
+      const elementParentLeft = element.parentElement?.getBoundingClientRect().left ?? 0;
+      if (elementParentLeft === 0) {
+        setLocation(elementLeft - 22);
+        return;
+      }
+      setLocation(elementLeft - elementParentLeft - 12);
+    }
 
     const handleDifficulty = (difficulty: string, index: number) => {
       setSelectedIndex(index);
@@ -86,7 +96,6 @@ export default function Game() {
     );
     if (value !== solution[row][col] && value !== "") {
       setUserError(userError + 1);
-      console.log(userError);
     }
     setPuzzle(newPuzzle);
   };
@@ -101,14 +110,6 @@ export default function Game() {
 
   return (
     <>
-      <div className="flex justify-between m-6 items-center">
-        <h1 className="text-2xl font-bold">Sudoku</h1>
-        <Link href="/">
-          <button className="px-4 py-2 bg-green-500 hover:bg-green-700 text-black font-semibold rounded">
-            Return to Solver
-          </button>
-        </Link>
-      </div>
       <div>
         <div className="relative w-full max-w-lg mx-auto mt-14">
           <div className="relative grid grid-cols-5 gap-4 bg-gray-200 p-4 rounded-lg">
@@ -119,10 +120,21 @@ export default function Game() {
 
             {["Easy", "Medium", "Hard", "Expert", "Evil"].map(
               (label, index) => (
-                <div
-                  key={index}
+                <button
+                  key={`difficulty-${label}`}
                   className="relative hover:scale-110 flex items-center justify-center cursor-pointer text-black text-lg"
-                  onClick={() => handleDifficulty(label, index)}
+                  type="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      handleDifficulty(label, index);
+                    }
+                  }}
+                  onClick={(e) => {
+                    handleDifficulty(label, index)
+                    handleLocation(e.currentTarget)
+                  }
+                  }
                 >
                   <span
                     className={`transition-transform duration-500 ease-in-out ${
@@ -131,7 +143,7 @@ export default function Game() {
                   >
                     {label}
                   </span>
-                </div>
+                </button>
               )
             )}
           </div>

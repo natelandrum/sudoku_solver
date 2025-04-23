@@ -4,7 +4,7 @@ export async function POST(req: Request) {
   const { grid } = await req.json();
 
   try {
-    const response = await fetch("http://localhost:8080/solve", {
+    const response = await fetch("http://backend:4000/solve", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ grid }),
@@ -13,6 +13,7 @@ export async function POST(req: Request) {
     const data = await response.json();
     return NextResponse.json(data);
   } catch (error) {
+    console.error("Error:", error);
     return NextResponse.json(
       { status: "error", message: "Internal server error." },
       { status: 500 }
