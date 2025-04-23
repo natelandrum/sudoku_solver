@@ -1,0 +1,24 @@
+services:
+  backend:
+    build: ./backend
+    container_name: sudoku-backend
+    ports:
+      - "4000:4000"
+    networks:
+      - sudoku-net
+
+  frontend:
+    build: ./frontend
+    container_name: sudoku-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - BACKEND_URL=http://backend:4000
+    depends_on:
+      - backend
+    networks:
+      - sudoku-net
+
+networks:
+  sudoku-net:
+    driver: bridge
