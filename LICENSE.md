@@ -1,5 +1,7 @@
 # Apache License
 
+(as pertaining to Erlang program)
+
 Version 2.0, January 2004
 
 [Apache Licenses](http://www.apache.org/licenses/)
