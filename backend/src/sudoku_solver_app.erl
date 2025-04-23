@@ -16,7 +16,7 @@ start(_StartType, _StartArgs) ->
     ]}
 ]),
 {ok, _} = cowboy:start_clear(http_listener,
-    [{port, 8080}],
+    [{port, 4000}],
     #{env => #{dispatch => Dispatch}}
 ),
     sudoku_solver_sup:start_link().
