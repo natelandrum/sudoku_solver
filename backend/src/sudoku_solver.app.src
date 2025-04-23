@@ -1,0 +1,22 @@
+{application, sudoku_solver, [
+    {description, "Sudoku Solver Application"},
+    {vsn, "0.1.0"},
+    {registered, []},
+    {mod, {sudoku_solver_app, []}},
+    {applications, [
+        cowboy,
+        kernel,
+        stdlib,
+        jsx,
+        ranch,
+        cowlib
+    ]},
+    {env, []},
+    {modules, [
+        sudoku_solver_app,
+        sudoku_solver_handler,
+        sudoku_solver_sup,
+        sudoku_solver
+    ]},
+    {licenses, ["Apache-2.0"]}
+ ]}.
