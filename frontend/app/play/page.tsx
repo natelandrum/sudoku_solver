@@ -4,6 +4,72 @@ import { useState, useEffect } from "react";
 import clsx from "clsx";
 
 export default function Game() {
+
+    useEffect(() => {
+      document.querySelector("input")?.focus();
+
+      document.querySelectorAll("input").forEach((input) => {
+        input.addEventListener("keydown", (e) => {
+          switch (e.key) {
+            case "ArrowUp": {
+              e.preventDefault();
+              const [row, col] = (e.target as HTMLInputElement).id
+                .split("-")
+                .slice(1)
+                .map(Number);
+              const prevRow = row === 0 ? 8 : row - 1;
+              const prevInput = document.getElementById(
+                `cell-${prevRow}-${col}`
+              );
+              prevInput?.focus();
+              break;
+            }
+            case "ArrowDown": {
+              e.preventDefault();
+              const [row, col] = (e.target as HTMLInputElement).id
+                .split("-")
+                .slice(1)
+                .map(Number);
+              const nextRow = row === 8 ? 0 : row + 1;
+              const nextInput = document.getElementById(
+                `cell-${nextRow}-${col}`
+              );
+              nextInput?.focus();
+              break;
+            }
+            case "ArrowLeft": {
+              e.preventDefault();
+              const [row, col] = (e.target as HTMLInputElement).id
+                .split("-")
+                .slice(1)
+                .map(Number);
+              const prevCol = col === 0 ? 8 : col - 1;
+              const prevInput = document.getElementById(
+                `cell-${row}-${prevCol}`
+              );
+              prevInput?.focus();
+              break;
+            }
+            case "ArrowRight": {
+              e.preventDefault();
+              const [row, col] = (e.target as HTMLInputElement).id
+                .split("-")
+                .slice(1)
+                .map(Number);
+              const nextCol = col === 8 ? 0 : col + 1;
+              const nextInput = document.getElementById(
+                `cell-${row}-${nextCol}`
+              );
+              nextInput?.focus();
+              break;
+            }
+            default:
+              break;
+          }
+        });
+      });
+    }, []);
+
   const [puzzle, setPuzzle] = useState<string[][]>(
     Array(9).fill(Array(9).fill(""))
   );
@@ -170,6 +236,7 @@ export default function Game() {
                     type="text"
                     value={cell}
                     autoComplete="off"
+                    inputMode="numeric"
                     onChange={(e) => handleChange(i, j, e.target.value)}
                     readOnly={
                       cell !== "" && cell === solution[i][j] && !isSolved
