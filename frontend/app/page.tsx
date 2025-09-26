@@ -28,13 +28,13 @@ const Home = () => {
   return (
     <main className="p-4 font-sans">
       {error && (
-        <div className="flex justify-center">
+        <div className="flex justify-center mb-4">
           <h2 className="text-red-500">Error:&nbsp;</h2>
           <p className="text-red-500">{error}</p>
         </div>
       )}
       {solution && (
-        <div className="flex justify-center">
+        <div className="flex justify-center mb-4">
           <h2 className="text-green-500">Solution:&nbsp;</h2>
           <p className="text-green-500">Solved!</p>
         </div>
