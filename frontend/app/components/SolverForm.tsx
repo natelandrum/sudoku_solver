@@ -215,7 +215,7 @@ const SolverForm: FunctionComponent<SolverFormProps> = ({ onSolve, solvedGrid })
                   inputMode="numeric"
                   onChange={(e) => handleChange(i, j, e.target.value)}
                   className={clsx(
-                    "w-10 h-10 text-center border border-black text-black text-2xl",
+                    "w-10 h-10 text-center bg-white border border-black text-black text-2xl",
                     {
                       "border-r-4": (j + 1) % 3 === 0 && j !== 0,
                       "border-b-4": (i + 1) % 3 === 0 && i !== 0,
