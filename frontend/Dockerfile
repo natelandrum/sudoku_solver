@@ -4,11 +4,11 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile
 
 COPY . .
 
-RUN npm run build
+RUN pnpm run build
 
 # --- run stage ---
 FROM node:22-alpine
@@ -19,4 +19,4 @@ ENV NODE_ENV=production
 COPY --from=build /app ./
 
 EXPOSE 3000
-CMD ["npm", "start"]
+CMD ["pnpm", "start"]
